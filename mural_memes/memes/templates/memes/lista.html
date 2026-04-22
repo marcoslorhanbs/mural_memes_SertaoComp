@@ -1,0 +1,60 @@
+{% extends 'memes/base.html' %}
+
+{% block title %}Mural de Memes — Início{% endblock %}
+
+{% block content %}
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Memes em destaque 🔥</h2>
+    <span class="text-muted small">{{ memes.count }} meme{{ memes.count|pluralize:"s" }}</span>
+  </div>
+
+  
+  <div class="mb-4 d-flex flex-wrap gap-2">
+    <a href="{% url 'memes:lista' %}"
+       class="btn btn-sm {% if not categoria_atual %}btn-success{% else %}btn-outline-success{% endif %}">
+      Todos
+    </a>
+    {% for val, label in categorias %}
+      <a href="?categoria={{ val }}"
+         class="btn btn-sm {% if categoria_atual == val %}btn-success{% else %}btn-outline-success{% endif %}">
+        {{ label }}
+      </a>
+    {% endfor %}
+  </div>
+
+  
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for meme in memes %}
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ meme.imagem_url }}" class="card-img-top" alt="{{ meme.titulo }}"
+               onerror="this.src='https://placehold.co/400x200?text=Imagem+não+encontrada'">
+          <div class="card-body">
+            <h5 class="card-title">{{ meme.titulo }}</h5>
+            <span class="badge bg-success badge-categoria">{{ meme.get_categoria_display }}</span>
+            {% if meme.descricao %}
+              <p class="card-text text-muted small mt-2">{{ meme.descricao|truncatechars:80 }}</p>
+            {% endif %}
+          </div>
+          <div class="card-footer d-flex justify-content-between align-items-center">
+            <small class="text-muted">{{ meme.criado_em|date:"d/m/Y" }}</small>
+            <a href="{% url 'memes:detalhe' meme.pk %}" class="btn btn-success btn-sm">
+              Ver detalhes →
+            </a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="text-center py-5">
+          <p class="fs-4">😢 Nenhum meme encontrado.</p>
+          <a href="{% url 'memes:enviar' %}" class="btn btn-success">
+            Seja o primeiro a enviar um meme!
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'memes/base.html' %}
+
+{% block title %}{{ meme.titulo }}{% endblock %}
+
+{% block content %}
+
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+
+      <a href="{% url 'memes:lista' %}" class="btn btn-outline-secondary btn-sm mb-3">
+        ← Voltar para o Mural
+      </a>
+
+      <div class="card shadow-sm">
+        <img src="{{ meme.imagem_url }}" class="card-img-top" alt="{{ meme.titulo }}"
+             style="max-height: 450px; object-fit: contain; background: #f1f3f5;"
+             onerror="this.src='https://placehold.co/600x400?text=Imagem+não+encontrada'">
+
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h2 class="card-title mb-0">{{ meme.titulo }}</h2>
+            <span class="badge bg-success ms-2">{{ meme.get_categoria_display }}</span>
+          </div>
+
+          {% if meme.descricao %}
+            <p class="card-text mt-3">{{ meme.descricao }}</p>
+          {% endif %}
+        </div>
+
+        <div class="card-footer text-muted small">
+          Enviado em {{ meme.criado_em|date:"d \d\e F \d\e Y \à\s H:i" }}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}
