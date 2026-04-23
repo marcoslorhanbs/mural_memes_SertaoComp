@@ -4,3 +4,5 @@ Poste o resultado do projeto desenvolvido por você no minicurso e marque @marco
 ------------------------------------------------------------ <br>
 Sinta-se livre para baixar e customizar sua propria versão! <br>
 Instruções de como preparar o ambiente e rodar a aplicação no Readme do projeto "/mural_memes"
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
